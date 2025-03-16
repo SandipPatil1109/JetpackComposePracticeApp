@@ -101,7 +101,7 @@ fun HeadingTextComponents(value: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTextField(labelValue: String, imageVector: ImageVector) {
+fun MyTextField(labelValue: String, imageVector: ImageVector,onTextSelected:(String)->Unit) {
     var textValue = remember { mutableStateOf("") }
 
     OutlinedTextField(
@@ -118,7 +118,9 @@ fun MyTextField(labelValue: String, imageVector: ImageVector) {
 
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-        onValueChange = { textValue.value = it },
+        onValueChange = { textValue.value = it
+                        onTextSelected(it)
+                        },
         leadingIcon = {
             Icon(imageVector = imageVector, contentDescription = "")
         }
@@ -127,7 +129,7 @@ fun MyTextField(labelValue: String, imageVector: ImageVector) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextField(labelValue: String, imageVector: ImageVector) {
+fun PasswordTextField(labelValue: String, imageVector: ImageVector,onTextSelected: (String) -> Unit) {
     var passwordValue = remember { mutableStateOf("") }
     var passwordVisible = remember {
         mutableStateOf(false)
@@ -150,7 +152,9 @@ fun PasswordTextField(labelValue: String, imageVector: ImageVector) {
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done
         ),
-        onValueChange = { passwordValue.value = it },
+        onValueChange = { passwordValue.value = it
+                        onTextSelected(it)
+                        },
         leadingIcon = {
             Icon(imageVector = imageVector, contentDescription = "")
         },

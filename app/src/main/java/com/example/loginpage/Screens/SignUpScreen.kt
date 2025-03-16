@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.loginpage.R
 import com.example.loginpage.components.AccountClickabletext
 import com.example.loginpage.components.HeadingTextComponents
@@ -28,11 +29,13 @@ import com.example.loginpage.components.PasswordTextField
 import com.example.loginpage.components.buttonComponent
 import com.example.loginpage.components.checkBoxComponents
 import com.example.loginpage.components.divierTextComponent
+import com.example.loginpage.data.LoginViewModel
+import com.example.loginpage.data.UiEvents
 import com.example.loginpage.util.AppRouter
 import com.example.loginpage.util.Screen
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(loginViewModel: LoginViewModel = viewModel()) {
 
     Surface(
         color = Color.White, modifier = Modifier
@@ -51,16 +54,27 @@ fun SignUpScreen() {
             MyTextField(
                 labelValue = stringResource(id = R.string.textFirstName),
                 Icons.Outlined.Person
-            )
+            ) {
+                loginViewModel.onEvent(UiEvents.FirstNameChanged(it))
+            }
             MyTextField(
                 labelValue = stringResource(id = R.string.textLastName),
                 Icons.Outlined.Person
-            )
-            MyTextField(labelValue = stringResource(id = R.string.textEmail), Icons.Outlined.Email)
+            ) {
+                loginViewModel.onEvent(UiEvents.LastNameChanged(it))
+            }
+            MyTextField(
+                labelValue = stringResource(id = R.string.textEmail),
+                Icons.Outlined.Email
+            ) {
+                loginViewModel.onEvent(UiEvents.EmailChanged(it))
+            }
             PasswordTextField(
                 labelValue = stringResource(id = R.string.textPassword),
                 Icons.Default.Lock
-            )
+            ) {
+                loginViewModel.onEvent(UiEvents.PasswordChanged(it))
+            }
             checkBoxComponents(value = stringResource(id = R.string.termsandConditions)) {
                 AppRouter.navigateTo(Screen.TermsAndConditionsScreen)
             }
@@ -71,7 +85,7 @@ fun SignUpScreen() {
             divierTextComponent()
             Spacer(modifier = Modifier.height(40.dp))
             AccountClickabletext(true) {
-                 AppRouter.navigateTo(Screen.LoginScreen)
+                AppRouter.navigateTo(Screen.LoginScreen)
             }
 
         }

@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.loginpage.R
 import com.example.loginpage.components.AccountClickabletext
 import com.example.loginpage.components.HeadingTextComponents
@@ -24,33 +25,44 @@ import com.example.loginpage.components.NormalTextComponents
 import com.example.loginpage.components.PasswordTextField
 import com.example.loginpage.components.buttonComponent
 import com.example.loginpage.components.divierTextComponent
+import com.example.loginpage.data.LoginViewModel
+import com.example.loginpage.data.UiEvents
 import com.example.loginpage.util.AppRouter
 import com.example.loginpage.util.Screen
 
 @Preview
 @Composable
-fun LoginScreen(){
+fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
 
-    Surface(color = Color.White,modifier = Modifier
-        .fillMaxSize()
-        .padding(18.dp)) {
+    Surface(
+        color = Color.White, modifier = Modifier
+            .fillMaxSize()
+            .padding(18.dp)
+    ) {
 
         Column {
             NormalTextComponents(value = stringResource(id = R.string.Hello))
             HeadingTextComponents(value = stringResource(id = R.string.login))
             Spacer(modifier = Modifier.height(20.dp))
-            MyTextField(labelValue = stringResource(id = R.string.textEmail), Icons.Outlined.Email)
+            MyTextField(
+                labelValue = stringResource(id = R.string.textEmail),
+                Icons.Outlined.Email
+            ) {
+                loginViewModel.onEvent(UiEvents.EmailChanged(it))
+            }
             PasswordTextField(
                 labelValue = stringResource(id = R.string.textPassword),
                 Icons.Default.Lock
-            )
+            ) {
+                loginViewModel.onEvent(UiEvents.PasswordChanged(it))
+            }
             Spacer(modifier = Modifier.height(30.dp))
             buttonComponent(value = stringResource(id = R.string.login))
             Spacer(modifier = Modifier.height(20.dp))
             divierTextComponent()
             Spacer(modifier = Modifier.height(40.dp))
             AccountClickabletext(false) {
-               AppRouter.navigateTo(Screen.SignupScreen)
+                AppRouter.navigateTo(Screen.SignupScreen)
             }
 
         }
