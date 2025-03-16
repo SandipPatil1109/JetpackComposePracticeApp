@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">LoginPage</string>
+    <string name="Hello">Hey There,</string>
+    <string name="textAccount">Create an Account</string>
+    <string name="textWelcome">Welcome Back</string>
+    <string name="textFirstName">First Name</string>
+    <string name="textLastName">Last Name</string>
+    <string name="textEmail">Email</string>
+    <string name="textPassword">Password</string>
+    <string name="termsandConditions">By Continuing you accept our <u>privacy policy</u> and <u>terms of use</u>.</string>
+    <string name="termsandConditionsDetails">Terms of Use</string>
+    <string name="textRegister">Register</string>
+    <string name="login">Login</string>
+
+</resources>
